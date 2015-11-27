@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["SecItemCopyMatching",""]],"static":[["kSecClass",""],["kSecClassCertificate",""],["kSecClassGenericPassword",""],["kSecClassIdentity",""],["kSecClassInternetPassword",""],["kSecClassKey",""],["kSecMatchLimit",""],["kSecMatchSearchList",""],["kSecReturnAttributes",""],["kSecReturnData",""],["kSecReturnPersistentRef",""],["kSecReturnRef",""]]});
