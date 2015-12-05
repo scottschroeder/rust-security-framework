@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["errSecAuthFailed",""],["errSecBadReq",""],["errSecIO",""],["errSecNotTrusted",""],["errSecParam",""],["errSecSuccess",""],["errSecTrustSettingDeny",""]],"fn":[["SecCopyErrorMessageString",""]],"type":[["SecAccessRef",""],["SecCertificateRef",""],["SecIdentityRef",""],["SecKeyRef",""],["SecKeychainItemRef",""],["SecKeychainRef",""]]});
