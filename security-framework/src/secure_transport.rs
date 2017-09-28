@@ -251,6 +251,7 @@ impl<S> MidHandshakeClientBuilder<S> {
             danger_accept_invalid_certs
         } = self;
 
+
         let mut result = stream.handshake();
         loop {
             let stream = match result {
@@ -290,15 +291,11 @@ impl<S> MidHandshakeClientBuilder<S> {
                         let err = Error::from_code(errSecTrustSettingDeny);
                         return Err(ClientHandshakeError::Failure(err));
                     }
-                    TrustResult::RecoverableTrustFailure => {
-                        if danger_accept_invalid_certs {
-                            result = stream.handshake();
-                            continue;
-                        } else {
-                            let err = Error::from_code(errSecNotTrusted);
-                            return Err(ClientHandshakeError::Failure(err));
-                        }
+                    TrustResult::RecoverableTrustFailure if danger_accept_invalid_certs => {
+                        result = stream.handshake();
+                        continue;
                     }
+                    TrustResult::RecoverableTrustFailure |
                     TrustResult::FatalTrustFailure => {
                         let err = Error::from_code(errSecNotTrusted);
                         return Err(ClientHandshakeError::Failure(err));
@@ -1423,8 +1420,7 @@ mod test {
         let stream = p!(TcpStream::connect("expired.badssl.com:443"));
         let mut builder = ClientBuilder::new();
         builder.danger_accept_invalid_certs(true);
-        builder.danger_handshake_without_providing_domain_for_certificate_validation_and_server_name_indication(stream)
-            .unwrap();
+        builder.handshake("expired.badssl.com", stream).unwrap();
     }
 
     #[test]
